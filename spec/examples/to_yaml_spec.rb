@@ -90,7 +90,7 @@ module IceCube
     end
 
     it "should be able to make a round-trip to YAML with .hour_of_day" do
-      schedule = Schedule.new(Time.now)
+      schedule = Schedule.new(Time.zone.now)
       schedule.add_recurrence_rule Rule.daily.hour_of_day(1, 2)
 
       yaml_string = schedule.to_yaml
@@ -101,7 +101,7 @@ module IceCube
     end
 
     it "should be able to make a round-trip to YAML with .minute_of_hour" do
-      schedule = Schedule.new(Time.now)
+      schedule = Schedule.new(Time.zone.now)
       schedule.add_recurrence_rule Rule.daily.minute_of_hour(0, 30)
 
       yaml_string = schedule.to_yaml
@@ -123,7 +123,7 @@ module IceCube
     end
 
     it "should be able to make a round-trip to YAML with .second_of_minute" do
-      schedule = Schedule.new(Time.now)
+      schedule = Schedule.new(Time.zone.now)
       schedule.add_recurrence_rule Rule.daily.second_of_minute(1, 2)
 
       yaml_string = schedule.to_yaml
