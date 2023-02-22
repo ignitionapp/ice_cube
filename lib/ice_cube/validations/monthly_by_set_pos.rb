@@ -1,5 +1,4 @@
 module IceCube
-
   module Validations::MonthlyBySetPos
     def by_set_pos(*by_set_pos)
       by_set_pos.flatten!
@@ -15,7 +14,6 @@ module IceCube
     end
 
     class Validation
-
       attr_reader :rule, :by_set_pos
 
       def initialize(by_set_pos, rule)
@@ -43,7 +41,7 @@ module IceCube
 
         occurrences = new_schedule.occurrences_between(start_of_month, end_of_month)
         index = occurrences.index(step_time)
-        if index == nil
+        if index.nil?
           1
         else
           positive_set_pos = index + 1
@@ -66,12 +64,10 @@ module IceCube
       end
 
       def build_ical(builder)
-        builder['BYSETPOS'] << by_set_pos
+        builder["BYSETPOS"] << by_set_pos
       end
 
       nil
     end
-
   end
-
 end

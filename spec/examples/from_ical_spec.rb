@@ -84,7 +84,7 @@ module IceCube
       expect(rule).to eq(IceCube::Rule.weekly(2, :monday))
     end
 
-    it 'should be able to parse by_set_pos start (BYSETPOS)' do
+    it "should be able to parse by_set_pos start (BYSETPOS)" do
       rule = IceCube::Rule.from_ical("FREQ=MONTHLY;BYDAY=MO,WE;BYSETPOS=-1,1")
       rule.should == IceCube::Rule.monthly.day(:monday, :wednesday).by_set_pos([-1, 1])
     end
