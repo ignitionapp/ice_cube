@@ -144,7 +144,7 @@ module IceCube
 
     context "when the rule is the first 4 after the last days of the month by set pos" do
       let(:from_ical) { "RRULE:FREQ=MONTHLY;COUNT=4;BYMONTHDAY=28,29,30,31;BYSETPOS=4" }
-      let(:schedule_start) { Time.new(2023, 02, 22, 12, 0, 0) }
+      let(:schedule_start) { Time.new(2023, 0o2, 22, 12, 0, 0) }
       let(:from_time) { Time.new(2022, 10, 1) }
       let(:to_time) { Time.new(2023, 10, 31) }
       it "returns the first 4 previous last days of the month by set pos" do
@@ -161,7 +161,7 @@ module IceCube
 
     context "when the rule is the first 4 after the last wednesday of the month" do
       let(:from_ical) { "RRULE:FREQ=MONTHLY;COUNT=4;BYDAY=WE;BYSETPOS=-1" }
-      let(:schedule_start) { Time.new(2023, 02, 22, 12, 0, 0) }
+      let(:schedule_start) { Time.new(2023, 0o2, 22, 12, 0, 0) }
       let(:from_time) { Time.new(2022, 10, 1) }
       let(:to_time) { Time.new(2023, 10, 31) }
       it "returns the first 4 previous last days of the month by set pos" do
