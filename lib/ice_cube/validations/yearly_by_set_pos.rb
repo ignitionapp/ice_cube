@@ -1,7 +1,5 @@
 module IceCube
-
   module Validations::YearlyBySetPos
-
     def by_set_pos(*by_set_pos)
       return by_set_pos([by_set_pos]) if by_set_pos.is_a?(Integer)
 
@@ -22,11 +20,9 @@ module IceCube
     end
 
     class Validation
-
       attr_reader :rule, :by_set_pos
 
       def initialize(by_set_pos, rule)
-
         @by_set_pos = by_set_pos
         @rule = rule
       end
@@ -43,15 +39,14 @@ module IceCube
         start_of_year = TimeUtil.start_of_year step_time
         end_of_year = TimeUtil.end_of_year step_time
 
-
         new_schedule = IceCube::Schedule.new(TimeUtil.previous_year(step_time)) do |s|
-          s.add_recurrence_rule IceCube::Rule.from_hash(rule.to_hash.reject{|k, v| [:by_set_pos, :count, :until].include? k})
+          s.add_recurrence_rule IceCube::Rule.from_hash(rule.to_hash.except(:by_set_pos, :count, :until))
         end
 
         occurrences = new_schedule.occurrences_between(start_of_year, end_of_year)
 
         index = occurrences.index(step_time)
-        if index == nil
+        if index.nil?
           1
         else
           positive_set_pos = index + 1
@@ -63,11 +58,7 @@ module IceCube
             1
           end
         end
-
-
-
       end
-
 
       def build_s(builder)
         builder.piece(:by_set_pos) << by_set_pos
@@ -78,12 +69,10 @@ module IceCube
       end
 
       def build_ical(builder)
-        builder['BYSETPOS'] << by_set_pos
+        builder["BYSETPOS"] << by_set_pos
       end
 
       nil
     end
-
   end
-
 end
