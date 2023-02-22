@@ -14,6 +14,19 @@ module IceCube
                                                                                                  ])
     end
 
+    context 'when billing occurs at the end of the month' do
+      it 'should return the correct end of the months dates' do
+        schedule = IceCube::Schedule.from_ical "RRULE:FREQ=MONTHLY;COUNT=4;BYMONTHDAY=28,29,30,31;BYSETPOS=-1"
+        schedule.start_time = Time.new(2022, 11, 1, 12, 0, 0)
+        expect(schedule.occurrences_between(Time.new(2022, 10, 01), Time.new(2023, 10, 31))).to eq([
+                                                                                                     Time.new(2022,11,30,12,0,0),
+                                                                                                     Time.new(2022,12,31,12,0,0),
+                                                                                                     Time.new(2023,01,31,12,0,0),
+                                                                                                     Time.new(2023,02,28,12,0,0)
+                                                                                                   ])
+      end
+    end
+
   end
 
   describe YearlyRule, 'BYSETPOS' do

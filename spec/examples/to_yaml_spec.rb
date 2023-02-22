@@ -134,7 +134,7 @@ module IceCube
     end
 
     it "should be able to make a round-trip to YAML whilst preserving exception rules" do
-      original_schedule = Schedule.new(Time.now)
+      original_schedule = Schedule.new(Time.zone.now)
       original_schedule.add_recurrence_rule Rule.daily.day(:monday, :wednesday)
       original_schedule.add_exception_rule Rule.daily.day(:wednesday)
 

@@ -92,6 +92,12 @@ module IceCube
       end
     end
 
+    describe :serialize_time do
+      it "supports ISO8601 time strings" do
+        expect(TimeUtil.serialize_time(Time.utc(2014, 4, 4, 10, 30, 0))).to eq("2014-04-04T18:30:00+08:00")
+      end
+    end
+
     describe :match_zone do
       let(:date) { Date.new(2014, 1, 1) }
 
