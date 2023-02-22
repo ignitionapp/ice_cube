@@ -1,4 +1,6 @@
 require File.dirname(__FILE__) + "/../spec_helper"
+require "active_support/all"
+require "active_support/core_ext"
 
 describe Occurrence do
   it "reports as a Time" do
