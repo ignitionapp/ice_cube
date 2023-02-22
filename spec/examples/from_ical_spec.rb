@@ -84,9 +84,13 @@ module IceCube
       expect(rule).to eq(IceCube::Rule.weekly(2, :monday))
     end
 
-    it "should be able to parse by_set_pos start (BYSETPOS)" do
-      rule = IceCube::Rule.from_ical("FREQ=MONTHLY;BYDAY=MO,WE;BYSETPOS=-1,1")
-      expect(rule).to eq(IceCube::Rule.monthly.day(:monday, :wednesday).by_set_pos([-1, 1]))
+    context "when from_ical contains BYSETPOS" do
+      let(:from_ical) { "FREQ=MONTHLY;BYDAY=MO,WE;BYSETPOS=-1,1" }
+      let(:rule) { IceCube::Rule.from_ical(from_ical) }
+      it "parses BYSETPOS input" do
+        expect(rule.to_ical).to eq(from_ical)
+        expect(rule).to eq(IceCube::Rule.monthly.day(:monday, :wednesday).by_set_pos([-1, 1]))
+      end
     end
 
     it "should return no occurrences after daily interval with count is over" do
