@@ -30,7 +30,7 @@ describe Occurrence do
       time_now = Time.current
       occurrence = Occurrence.new(time_now)
 
-      expect(occurrence.strftime('%Y-%m-%d')).to eq time_now.strftime('%Y-%m-%d')
+      expect(occurrence.strftime("%Y-%m-%d")).to eq time_now.strftime("%Y-%m-%d")
     end
   end
 
