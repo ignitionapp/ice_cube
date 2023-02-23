@@ -1,4 +1,6 @@
 require File.dirname(__FILE__) + "/../spec_helper"
+require "active_support/all"
+require "active_support/core_ext"
 
 describe Occurrence do
   it "reports as a Time" do
@@ -28,7 +30,7 @@ describe Occurrence do
       time_now = Time.current
       occurrence = Occurrence.new(time_now)
 
-      expect(occurrence.to_s(:short)).to eq time_now.to_s(:short)
+      expect(occurrence.strftime("%Y-%m-%d")).to eq time_now.strftime("%Y-%m-%d")
     end
   end
 

@@ -1,5 +1,7 @@
 require "date"
 require "time"
+require "active_support"
+require "active_support/core_ext"
 
 module IceCube
   module TimeUtil
@@ -51,7 +53,7 @@ module IceCube
       else
         time.getlocal(reference.utc_offset)
       end
-      Date === input_time ? beginning_of_date(time, reference) : time
+      (Date === input_time) ? beginning_of_date(time, reference) : time
     end
 
     # Ensure that this is either nil, or a time
@@ -193,6 +195,36 @@ module IceCube
       [nth_occurrence_of_weekday, this_weekday_in_month_count]
     end
 
+    # Use Activesupport CoreExt functions to manipulate time
+    def self.start_of_month time
+      time.beginning_of_month
+    end
+
+    # Use Activesupport CoreExt functions to manipulate time
+    def self.end_of_month time
+      time.end_of_month
+    end
+
+    # Use Activesupport CoreExt functions to manipulate time
+    def self.start_of_year time
+      time.beginning_of_year
+    end
+
+    # Use Activesupport CoreExt functions to manipulate time
+    def self.end_of_year time
+      time.end_of_year
+    end
+
+    # Use Activesupport CoreExt functions to manipulate time
+    def self.previous_month time
+      time - 1.month
+    end
+
+    # Use Activesupport CoreExt functions to manipulate time
+    def self.previous_year time
+      time - 1.year
+    end
+
     # Get the days in the month for +time
     def self.days_in_month(time)
       date = Date.new(time.year, time.month, 1)
@@ -286,12 +318,12 @@ module IceCube
       def add(type, val)
         type = :day if type == :wday
         @time += case type
-                 when :year then TimeUtil.days_in_n_years(@time, val) * ONE_DAY
-                 when :month then TimeUtil.days_in_n_months(@time, val) * ONE_DAY
-                 when :day then val * ONE_DAY
-                 when :hour then val * ONE_HOUR
-                 when :min then val * ONE_MINUTE
-                 when :sec then val
+        when :year then TimeUtil.days_in_n_years(@time, val) * ONE_DAY
+        when :month then TimeUtil.days_in_n_months(@time, val) * ONE_DAY
+        when :day then val * ONE_DAY
+        when :hour then val * ONE_HOUR
+        when :min then val * ONE_MINUTE
+        when :sec then val
         end
       end
 
@@ -318,20 +350,20 @@ module IceCube
       end
 
       def clear_sec
-        @time.sec > 0 ? @time -= @time.sec : @time
+        (@time.sec > 0) ? @time -= @time.sec : @time
       end
 
       def clear_min
-        @time.min > 0 ? @time -= (@time.min * ONE_MINUTE) : @time
+        (@time.min > 0) ? @time -= (@time.min * ONE_MINUTE) : @time
       end
 
       def clear_hour
-        @time.hour > 0 ? @time -= (@time.hour * ONE_HOUR) : @time
+        (@time.hour > 0) ? @time -= (@time.hour * ONE_HOUR) : @time
       end
 
       # Move to the first of the month, 0 hours
       def clear_day
-        @time.day > 1 ? @time -= (@time.day - 1) * ONE_DAY : @time
+        (@time.day > 1) ? @time -= (@time.day - 1) * ONE_DAY : @time
       end
 
       # Clear to january 1st
