@@ -77,7 +77,7 @@ module IceCube
 
     context "when the rule is the first 4 after the last days of the month by set pos" do
       let(:from_ical) { "RRULE:FREQ=MONTHLY;COUNT=4;BYMONTHDAY=28,29,30,31;BYSETPOS=4" }
-      let(:schedule_start) { Time.new(2023, 0o2, 22, 12, 0, 0) }
+      let(:schedule_start) { Time.new(2023, 2, 22, 12, 0, 0) }
       let(:from_time) { Time.new(2022, 10, 1) }
       let(:to_time) { Time.new(2023, 10, 31) }
       it "returns the first 4 previous last days of the month by set pos" do
@@ -94,7 +94,7 @@ module IceCube
 
     context "when the rule is the first 4 after the last wednesday of the month" do
       let(:from_ical) { "RRULE:FREQ=MONTHLY;COUNT=4;BYDAY=WE;BYSETPOS=-1" }
-      let(:schedule_start) { Time.new(2023, 0o2, 22, 12, 0, 0) }
+      let(:schedule_start) { Time.new(2023, 2, 22, 12, 0, 0) }
       let(:from_time) { Time.new(2022, 10, 1) }
       let(:to_time) { Time.new(2023, 10, 31) }
       it "returns the first 4 previous last days of the month by set pos" do
@@ -106,6 +106,34 @@ module IceCube
             Time.new(2023, 5, 31, 12, 0, 0)
           ]
         )
+      end
+    end
+  end
+
+  describe MonthlyRule, "BYSETPOS and BYDAY" do
+    context "when the rules include more varied set of BYDAY values" do
+      let(:start_date) { Date.new(2023, 1, 1) }
+
+      it "generates the expected dates" do
+        rrules = [
+          "RRULE:FREQ=MONTHLY;BYDAY=1FR,3FR;BYSETPOS=1,3",
+          "RRULE:FREQ=MONTHLY;BYDAY=1MO,-1MO;BYSETPOS=1,-1",
+          "RRULE:FREQ=MONTHLY;BYDAY=2WE,4WE;BYSETPOS=2,4",
+          "RRULE:FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1",
+          "RRULE:FREQ=MONTHLY;BYDAY=2FR;BYMONTHDAY=16,17,18,19,20,21,22;BYSETPOS=2"
+        ]
+
+        expected_dates = [
+          Date.new(2023, 3, 3), Date.new(2023, 2, 27),
+          Date.new(2023, 3, 22), Date.new(2023, 2, 28),
+          nil
+        ]
+
+        rrules.each_with_index do |rrule, i|
+          schedule = IceCube::Schedule.from_ical(rrule)
+          dates = schedule.occurrences_between(start_date, start_date + 6.months)
+          expect(dates.map(&:to_date).first).to eq(expected_dates[i])
+        end
       end
     end
   end
