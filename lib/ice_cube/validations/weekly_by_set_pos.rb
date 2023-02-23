@@ -3,7 +3,7 @@ module IceCube
     def by_set_pos(*by_set_pos)
       by_set_pos.flatten!
       by_set_pos.each do |set_pos|
-        unless (-366..366).include?(set_pos) && set_pos != 0
+        unless (-366..366).cover?(set_pos) && set_pos != 0
           raise ArgumentError, "Expecting number in [-366, -1] or [1, 366], got #{set_pos} (#{by_set_pos})"
         end
       end
@@ -14,7 +14,6 @@ module IceCube
     end
 
     class Validation
-
       attr_reader :rule, :by_set_pos
 
       def initialize(by_set_pos, rule)
@@ -36,7 +35,7 @@ module IceCube
         start_day_of_week = TimeUtil.sym_to_wday(rule.week_start)
         step_time_day_of_week = step_time_date.wday
         days_delta = step_time_day_of_week - start_day_of_week
-        days_to_start = days_delta >= 0 ? days_delta : 7 + days_delta
+        days_to_start = (days_delta >= 0) ? days_delta : 7 + days_delta
         start_of_week_date = step_time_date - days_to_start
         end_of_week_date = start_of_week_date + 6
         start_of_week = IceCube::TimeUtil.build_in_zone(
@@ -82,7 +81,7 @@ module IceCube
       end
 
       def build_ical(builder)
-        builder['BYSETPOS'] << by_set_pos
+        builder["BYSETPOS"] << by_set_pos
       end
 
       nil

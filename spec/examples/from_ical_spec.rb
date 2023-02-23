@@ -86,10 +86,10 @@ module IceCube
 
     it "should be able to parse by_set_pos start (BYSETPOS)" do
       rule = IceCube::Rule.from_ical("FREQ=MONTHLY;BYDAY=MO,WE;BYSETPOS=-1,1")
-      rule.should == IceCube::Rule.monthly.day(:monday, :wednesday).by_set_pos([-1, 1])
+      expect(rule).to eq(IceCube::Rule.monthly.day(:monday, :wednesday).by_set_pos([-1, 1]))
     end
 
-    it 'should raise when by_set_pos is out of range (BYSETPOS)' do
+    it "should raise when by_set_pos is out of range (BYSETPOS)" do
       expect {
         IceCube::Rule.from_ical("FREQ=MONTHLY;BYDAY=MO,WE;BYSETPOS=-367")
       }.to raise_error(/Expecting number in \[-366, -1\] or \[1, 366\]/)
@@ -103,7 +103,7 @@ module IceCube
       }.to raise_error(/Expecting number in \[-366, -1\] or \[1, 366\]/)
     end
 
-    it 'should return no occurrences after daily interval with count is over' do
+    it "should return no occurrences after daily interval with count is over" do
       schedule = IceCube::Schedule.new(Time.now)
       schedule.add_recurrence_rule(IceCube::Rule.from_ical("FREQ=DAILY;COUNT=5"))
       expect(schedule.occurrences_between(Time.now + (IceCube::ONE_DAY * 7), Time.now + (IceCube::ONE_DAY * 14)).count).to eq(0)
@@ -453,7 +453,7 @@ module IceCube
       it "matches simple daily" do
         ical_string = "DTSTART:20130314T201500Z\nDTEND:20130314T201545Z\nRRULE:FREQ=WEEKLY;BYDAY=TH;UNT\n  IL=20130531T100000Z\nDESCRIPTION:This is a test event\nSUMMARY:Test Event\n"
         schedule = IceCube::Schedule.from_ical(ical_string)
-        expect(schedule.to_ical.split(/\n/).select {|x| x =~ /RRULE/}.first).to eq("RRULE:FREQ=WEEKLY;UNTIL=20130531T100000Z;BYDAY=TH")
+        expect(schedule.to_ical.split("\n").find { |x| x =~ /RRULE/ }).to eq("RRULE:FREQ=WEEKLY;UNTIL=20130531T100000Z;BYDAY=TH")
       end
     end
   end
