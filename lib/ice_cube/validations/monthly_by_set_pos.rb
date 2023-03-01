@@ -60,7 +60,7 @@ module IceCube
       end
 
       def build_hash(builder)
-        builder.validations_array(:by_set_pos).append(*by_set_pos)
+        builder[:by_set_pos] = by_set_pos
       end
 
       def build_ical(builder)
