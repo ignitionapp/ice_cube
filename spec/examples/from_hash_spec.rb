@@ -23,5 +23,11 @@ describe IceCube, "from_hash" do
       rule_from_hash = ::IceCube::Rule.from_hash(rule_from_ical.to_hash)
       expect(rule_from_hash.to_ical).to eq(rule_from_ical.to_ical)
     end
+
+    it "should return a proper ical representation after being rehashed for rule without BYSETPOS param" do
+      rule_from_ical = ::IceCube::Rule.from_ical "FREQ=WEEKLY;COUNT=30;INTERVAL=1;WKST=MO;BYDAY=MO"
+      rule_from_hash = ::IceCube::Rule.from_hash(rule_from_ical.to_hash)
+      expect(rule_from_hash.to_ical).to eq(rule_from_ical.to_ical)
+    end
   end
 end
