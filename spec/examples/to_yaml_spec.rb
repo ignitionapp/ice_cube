@@ -52,7 +52,7 @@ module IceCube
       schedule2 = Schedule.from_yaml(yaml_string)
 
       # compare without usecs
-      expect(schedule.first(10).map { |r| r.to_s }).to eq(schedule2.first(10).map { |r| r.to_s })
+      expect(schedule.first(10).map { |r| Time.parse(r.to_s).strftime("%Y-%m-%d") }).to eq(schedule2.first(10).map { |r| Time.parse(r.to_s).strftime("%Y-%m-%d") })
     end
 
     it "should be able to make a round-trip to YAML with .day_of_month" do

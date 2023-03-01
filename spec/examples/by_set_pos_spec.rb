@@ -104,6 +104,17 @@ module IceCube
           Time.new(2023, 2, 28, 12, 0, 0)
         ])
       end
+
+      it "returns the first 4 last days of the month by set pos" do
+        schedule = IceCube::Schedule.from_ical "RRULE:FREQ=MONTHLY;COUNT=4;BYMONTHDAY=28,29,30;BYSETPOS=-1"
+        schedule.start_time = Time.new(2019, 11, 30, 12, 0, 0)
+        expect(schedule.occurrences_between(Time.new(2019, 11, 1), Time.new(2020, 6, 30))).to eq([
+          Time.new(2019, 11, 30, 12, 0, 0),
+          Time.new(2019, 12, 30, 12, 0, 0),
+          Time.new(2020, 1, 30, 12, 0, 0),
+          Time.new(2020, 2, 29, 12, 0, 0)
+        ])
+      end
     end
 
     context "when the rule is for the first 4 second last days of the month by set pos" do
