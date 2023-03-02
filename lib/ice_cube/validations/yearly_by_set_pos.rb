@@ -56,7 +56,9 @@ module IceCube
       end
 
       def build_s(builder)
-        builder.piece(:by_set_pos) << by_set_pos
+        # returning empty string for BYSETPOS
+        # as this field is already represented by the BYYEARDAY
+        ""
       end
 
       def build_hash(builder)

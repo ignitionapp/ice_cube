@@ -84,7 +84,7 @@ module IceCube
           apply_validation(rule, name, args)
         end
 
-        if hash[:by_set_pos].present?
+        unless hash[:by_set_pos].nil?
           rule.send(:by_set_pos, hash[:by_set_pos])
         end
 
