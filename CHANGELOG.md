@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Indonesian translations. ([#505](https://github.com/seejohnrun/ice_cube/pull/505)) by [@achmiral](https://github.com/achmiral)
-- Support for BYSETPOS, including tests, and minor hash bug fixes
+- Support for BYSETPOS, including tests, and fixes for minor bugs (ie. Rule.from_hash, and Rule.to_s)
 
 ### Changed
 - Removed use of `delegate` method added in [66f1d797](https://github.com/ice-cube-ruby/ice_cube/commit/66f1d797092734563bfabd2132c024c7d087f683) , reverting to previous implementation. ([#522](https://github.com/ice-cube-ruby/ice_cube/pull/522))  by [@pacso](https://github.com/pacso)

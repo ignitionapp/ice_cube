@@ -103,6 +103,21 @@ module IceCube
       }.to raise_error(/Expecting number in \[-366, -1\] or \[1, 366\]/)
     end
 
+    it "should be able to return text correctly while using BYYEARDAY / BYSETPOS param" do
+      rule = ::IceCube::Rule.from_ical "FREQ=YEARLY;COUNT=12;BYYEARDAY=28,29,30;BYSETPOS=-1"
+      expect(rule.to_s).to eq("Yearly 12 times on the 28th, 29th, and 30th days of the year")
+    end
+
+    it "should be able to return text correctly while using BYMONTHDAY / BYSETPOS param" do
+      rule = ::IceCube::Rule.from_ical "FREQ=MONTHLY;COUNT=12;BYMONTHDAY=28,29,30;BYSETPOS=-1"
+      expect(rule.to_s).to eq("Monthly 12 times on the 28th, 29th, and 30th days of the month")
+    end
+
+    it "should be able to return text correctly while using BYDAY / BYSETPOS param" do
+      rule = ::IceCube::Rule.from_ical "FREQ=WEEKLY;COUNT=12;BYDAY=MO,TU;BYSETPOS=-1"
+      expect(rule.to_s).to eq("Weekly 12 times on Mondays and Tuesdays")
+    end
+
     it "should return no occurrences after daily interval with count is over" do
       schedule = IceCube::Schedule.new(Time.now)
       schedule.add_recurrence_rule(IceCube::Rule.from_ical("FREQ=DAILY;COUNT=5"))
