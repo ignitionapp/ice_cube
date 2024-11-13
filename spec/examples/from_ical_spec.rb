@@ -410,6 +410,11 @@ module IceCube
         str = "FREQ=DAILY;FAKE=23"
         expect { Rule.from_ical(str) }.to raise_error(ArgumentError, "Invalid rule validation type: FAKE")
       end
+
+      it "should raise ArgumentError when parsing BYSETPOS without another BY* part rule" do
+        str = "FREQ=MONTHLY;BYSETPOS=-1"
+        expect { Rule.from_ical(str) }.to raise_error(ArgumentError, "BYSETPOS must be used in conjuction with another BY* rule part")
+      end
     end
 
     describe "multiple rules" do
@@ -440,6 +445,14 @@ module IceCube
 
       describe "incomplete rule" do
         let(:ical_str) { "RRULE:FREQ" }
+        it_behaves_like "an invalid ical string"
+      end
+
+      describe "BYSETPOS without another BY* part rule" do
+        # str = "FREQ=MONTHLY;BYSETPOS=-1"
+        # expect { Rule.from_ical(str) }.to raise_error(ArgumentError, "BYSETPOS must be used in conjuction with another BY* rule part")
+
+        let(:ical_str) { "RRULE:FREQ=MONTHLY;BYSETPOS=-1" }
         it_behaves_like "an invalid ical string"
       end
 
