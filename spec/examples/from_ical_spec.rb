@@ -449,9 +449,6 @@ module IceCube
       end
 
       describe "BYSETPOS without another BY* part rule" do
-        # str = "FREQ=MONTHLY;BYSETPOS=-1"
-        # expect { Rule.from_ical(str) }.to raise_error(ArgumentError, "BYSETPOS must be used in conjuction with another BY* rule part")
-
         let(:ical_str) { "RRULE:FREQ=MONTHLY;BYSETPOS=-1" }
         it_behaves_like "an invalid ical string"
       end
