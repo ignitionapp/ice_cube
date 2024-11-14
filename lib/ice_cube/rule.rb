@@ -107,7 +107,7 @@ module IceCube
           :day_of_week,
           :hour_of_day,
           :minute_of_hour,
-          :second_of_minute,
+          :second_of_minute
         ]
 
         if !!validations[:by_set_pos]
