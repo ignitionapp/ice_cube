@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- some validation for ensuring BYSETPOS rule is used in conjunction with another BY* part rule. ([ignitionapp/ice_cube #5](https://github.com/ignitionapp/ice_cube/pull/5))
+
+### Added
 - Indonesian translations. ([#505](https://github.com/seejohnrun/ice_cube/pull/505)) by [@achmiral](https://github.com/achmiral)
 - Support for BYSETPOS, including tests, and fixes for minor bugs (ie. Rule.from_hash, and Rule.to_s)
 

@@ -84,11 +84,37 @@ module IceCube
           apply_validation(rule, name, args)
         end
 
+        unless hash[:validations][:by_set_pos].nil?
+          unless validate_by_set_pos_by_parts(rule, hash[:validations])
+            raise ArgumentError, "BYSETPOS must be used in conjuction with another BY* rule part"
+          end
+        end
+
         unless hash[:by_set_pos].nil?
           rule.send(:by_set_pos, hash[:by_set_pos])
         end
 
         rule
+      end
+
+      def validate_by_set_pos_by_parts(rule, validations)
+        by_parts = [
+          :month_of_year,
+          :week_of_year,
+          :day_of_year,
+          :day_of_month,
+          :day,
+          :day_of_week,
+          :hour_of_day,
+          :minute_of_hour,
+          :second_of_minute
+        ]
+
+        if !!validations[:by_set_pos]
+          by_parts.any? { |part| validations[part] }
+        else
+          true
+        end
       end
 
       private
