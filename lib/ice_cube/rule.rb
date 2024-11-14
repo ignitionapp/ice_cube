@@ -111,9 +111,9 @@ module IceCube
         ]
 
         if !!validations[:by_set_pos]
-          return by_parts.any? { |part| validations[part] }
+          by_parts.any? { |part| validations[part] }
         else
-          return true
+          true
         end
       end
 
