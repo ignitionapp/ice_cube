@@ -25,9 +25,9 @@ module IceCube
 
     def _match_key(key)
       return key if __getobj__.has_key? key
-      if key.class == Symbol
+      if key.instance_of?(Symbol)
         __getobj__.keys.detect { |k| return k if k == key.to_s }
-      elsif key.class == String
+      elsif key.instance_of(String)
         __getobj__.keys.detect { |k| return k if k.to_s == key }
       end
       key
